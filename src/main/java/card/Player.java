@@ -14,7 +14,7 @@ public class Player {
     }
 
     public Card getCard(int index){
-        this.hand.getCard(index);
+        return this.hand.getCard(index);
     }
 
     public Card removeCard(){
