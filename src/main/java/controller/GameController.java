@@ -97,6 +97,7 @@ public class GameController{
         Card playerCard = null;
         for(Player player : this.players){
             playerCard = player.removeCard();
+            playerCard.flip();
             this.deck.returnCardToDeck(playerCard);
         }
     }
