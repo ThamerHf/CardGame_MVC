@@ -1,4 +1,4 @@
-package card;
+package model;
 
 public enum Suit {
     DIAMONDS (1),

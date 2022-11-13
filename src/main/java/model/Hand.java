@@ -1,10 +1,11 @@
-package card;
+package model;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Hand {
     private List<Card> cards;
+    private final int FIRSTCARD = 0;
 
     public Hand(){
         this.cards = new ArrayList<Card>();
@@ -19,6 +20,6 @@ public class Hand {
     }
 
     public Card removeCard(){
-        return cards.remove(0);
+        return cards.remove(FIRSTCARD);
     }
 }

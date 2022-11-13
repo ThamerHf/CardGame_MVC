@@ -1,4 +1,4 @@
-package card;
+package model;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -6,6 +6,7 @@ import java.util.Collections;
 
 public class Deck {
     private List<Card> cards;
+    private final int FIRSTCARD = 0;
 
     public Deck(){
         this.cards = new ArrayList<Card>();
@@ -16,7 +17,7 @@ public class Deck {
         }
     }
 
-    private void shuffle() {
+    public void shuffle() {
         Random random = new Random();
         for(int i = 0; i < cards.size(); i++){
             Collections.swap(cards, i, random.nextInt(cards.size()));
@@ -24,8 +25,7 @@ public class Deck {
     }
 
     public Card removeTopCard(){
-        int first = 0;
-        return this.cards.remove(first);
+        return this.cards.remove(FIRSTCARD);
     }
 
     public void returnCardToDeck(Card card){

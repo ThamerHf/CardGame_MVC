@@ -1,4 +1,4 @@
-package card;
+package model;
 
 public class Card {
     private Rank rank;
