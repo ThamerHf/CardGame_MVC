@@ -4,12 +4,11 @@ import model.Player;
 import model.Deck;
 import model.Card;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class GameController{
-    enum GamerState{
+    enum GameState{
         AddingPlayers, CardDealt, WinnerRevealed;
     }
 
@@ -18,56 +17,59 @@ public class GameController{
     private GameViewer view;
     private List<Player> players;
     private Player winner;
-    private GamerState gamerState;
+    private GameState gameState;
 
     public GameController(Deck deck, GameViewer view){
         this.deck = deck;
         this.view = view;
         this.players = new ArrayList<Player>();
         this.view.setController(this);
-        this.gamerState = GamerState.AddingPlayers;
+        this.gameState = GameState.AddingPlayers;
     }
 
     public void run(){
-        while(this.gamerState == GamerState.AddingPlayers){
-            this.view.something();
+        while(this.gameState == GameState.AddingPlayers){
+            this.view.askForPlayerName();
         }
 
-        switch (gamerState) {
+        switch (gameState) {
             case CardDealt:
-                this.view.something();
+                this.view.askForFlip();
                 break;
             case WinnerRevealed:
-                this.view.something();
+                this.gameState = GameState.AddingPlayers;
+                this.view.askForNewGame();
                 break;
         }
     }
 
     public void addPlayer(String playerName){
-        if(gamerState == GamerState.AddingPlayers){
+        if(gameState == GameState.AddingPlayers){
             this.players.add(new Player(playerName));
-            this.view.something();
+            this.view.showPlayerName(players.size(), playerName);
         }
     }
 
     public void startGame(){
-        if(gamerState != GamerState.CardDealt){
+        if(gameState != GameState.CardDealt){
             this.deck.shuffle();
+            int playerIndex = 1;
             for(Player player : this.players){
                 player.addCardToHand(deck.removeTopCard());
-                this.view.something();
+                this.view.showFaceDownCardForPlayer(playerIndex++, player.getName());
             }
-            this.gamerState = GamerState.CardDealt;
+            this.gameState = GameState.CardDealt;
         }
 
         this.run();
     }
 
     public void flipCards(){
+        int playerIndex = 1;
         for(Player player : this.players){
             Card card = player.getCard(FIRSTCARD);
             card.flip();
-            view.something();
+            view.showFaceUpCardForPlayer(playerIndex++, player.getName(), card);
         }
 
         this.evaluateWinner();
@@ -90,7 +92,8 @@ public class GameController{
     }
 
     public void displayWinner(){
-        this.view.something();
+        this.view.showWinner(winner.getName());
+        this.gameState = GameState.WinnerRevealed;
     }
 
     public void rebuildDeck(){
@@ -123,7 +126,7 @@ public class GameController{
                 bestSuit = bestCard.getRank().value();
             }
         }
+
+        this.winner = bestPlayer;
     }
-
-
 }

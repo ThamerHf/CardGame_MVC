@@ -12,7 +12,7 @@ public class Deck {
         this.cards = new ArrayList<Card>();
         for(Rank rank : Rank.values()){
             for(Suit suit: Suit.values()){
-                cards.add(new Card(rank, suit));
+                this.cards.add(new Card(rank, suit));
             }
         }
     }

@@ -20,4 +20,8 @@ public class Player {
     public Card removeCard(){
         return this.hand.removeCard();
     }
+
+    public String getName(){
+        return this.name;
+    }
 }

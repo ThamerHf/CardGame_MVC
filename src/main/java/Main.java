@@ -1,5 +1,10 @@
+import controller.GameController;
+import model.Deck;
+import view.GameViewer;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello world!");
+        GameController controller = new GameController(new Deck(), new GameViewer());
+        controller.run();
     }
 }
